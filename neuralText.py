@@ -21,24 +21,11 @@ sequence_length = 250
 
 def learn(model_name):
     X, y = dataset.get_dataset()
-    y = tf.convert_to_tensor(y)
-    X = tf.convert_to_tensor(X)
-    raw_train_ds = tf.data.Dataset.from_tensors((X,y))
+    raw_train_ds = tf.data.Dataset.from_tensors_slices((X,y))
     raw_train_ds.batch(batch_size)
 
-
-    #raw_train_ds = tf.keras.utils.text_dataset_from_directory(
-        # data_text_dir,
-        # batch_size=batch_size,
-        # validation_split=0.2,
-        # subset='training',
-        # seed=123)
-    raw_val_ds = tf.keras.utils.text_dataset_from_directory(
-        data_text_dir,
-        batch_size=batch_size,
-        validation_split=0.2,
-        subset='validation',
-        seed=123)
+    raw_val_ds = tf.data.Dataset.from_tensors_slices((X, y))
+    raw_val_ds.batch(batch_size)
     print(raw_val_ds)
     print(raw_train_ds)
 
